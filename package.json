@@ -1,19 +1,19 @@
 {
-    "name": "maily",
+    "name": "emaily",
     "version": "1.0.0",
-    "description": "maily",
+    "description": "emaily",
     "main": "index.js",
     "scripts": {},
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/arcdevio/maily.git"
+        "url": "git+https://github.com/arcdevio/emaily.git"
     },
     "author": "Arc IO",
     "license": "SEE LICENSE IN LICENSE",
     "bugs": {
-        "url": "https://github.com/arcdevio/maily/issues"
+        "url": "https://github.com/arcdevio/emaily/issues"
     },
-    "homepage": "https://github.com/arcdevio/maily#readme",
+    "homepage": "https://github.com/arcdevio/emaily#readme",
     "dependencies": {
         "aws-sdk": "^2.507.0"
     }

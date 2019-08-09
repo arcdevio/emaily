@@ -1,2 +1,2 @@
-# maily
-maily
+# emaily
+emaily
