@@ -1,0 +1,20 @@
+{
+    "name": "maily",
+    "version": "1.0.0",
+    "description": "maily",
+    "main": "index.js",
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/arcdevio/maily.git"
+    },
+    "author": "Arc IO",
+    "license": "SEE LICENSE IN LICENSE",
+    "bugs": {
+        "url": "https://github.com/arcdevio/maily/issues"
+    },
+    "homepage": "https://github.com/arcdevio/maily#readme",
+    "dependencies": {
+        "aws-sdk": "^2.507.0"
+    }
+}
