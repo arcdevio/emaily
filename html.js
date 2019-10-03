@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (data) {
-    return `
+    return /*html*/`
     	<!DOCTYPE html>
     	<html>
     	<head>
