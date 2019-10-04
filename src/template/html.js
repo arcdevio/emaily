@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (data) {
+module.exports = function (data, lines) {
     return /*html*/`
     	<!DOCTYPE html>
     	<html>
@@ -79,7 +79,7 @@ module.exports = function (data) {
     															<td align="left" style="font-family: sans-serif; font-size: 15px; vertical-align: top; padding-bottom: 15px;">
     																<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; margin: auto; width: 90%;">
     																	<tbody>
-    																		${pairs.join('\n')}
+    																		${lines.join('\n')}
     																	</tbody>
     																</table>
     															</td>

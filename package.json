@@ -15,6 +15,6 @@
     },
     "homepage": "https://github.com/arcdevio/emaily#readme",
     "dependencies": {
-        "aws-sdk": "^2.507.0"
+        "aws-sdk": "^2.542.0"
     }
 }
