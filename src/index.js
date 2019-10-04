@@ -35,21 +35,27 @@ module.exports = class Emaily {
         const textLines = [];
         const htmlLines = [];
 
+        const csvHead = [];
+        const csvLine = [];
+
     	for (const name in data) {
     		if (name.charAt(0) !== '$') {
-    			htmlLines.push(HtmlLine(name, data[name]));
-    			textLines.push(TextLine(name, data[name]));
+                const value = data[name];
+    			htmlLines.push(HtmlLine(name, value));
+    			textLines.push(TextLine(name, value));
+                csvHead.push(name);
+                csvLine.push(value);
     		}
     	}
 
         const text = Text(data, textLines);
         const html = Html(data, htmlLines);
+        const csv = `${csvHead.join(',')}\n"${csvLine.join('","')}"`;
 
-        return { text, html };
+        return { text, html, csv };
     }
 
     async send (data) {
-        // const { cc, bcc, to, from, text, html, reply, subject, attachments } = data || {};
         const raw = Raw(data);
         const options = { RawMessage: { Data: Buffer.from(raw) } };
     	const result = this.ses.sendRawEmail(options).promise();
