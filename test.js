@@ -3,7 +3,9 @@ const Emaily = require('./src/index.js');
 
 (async function () {
 
-    const emaily = new Emaily();
+    const emaily = new Emaily({
+        credentials: { id: null, secret: null }
+    });
 
     const { text, html, csv } = await emaily.template({
         firstName: 'joe',
