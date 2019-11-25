@@ -1,6 +1,6 @@
 {
     "name": "emaily",
-    "version": "3.0.1",
+    "version": "3.0.2",
     "description": "emaily",
     "main": "dst/index.js",
     "scripts": {
@@ -17,6 +17,6 @@
     },
     "homepage": "https://github.com/arcdevio/emaily#readme",
     "dependencies": {
-        "aws-sdk": "^2.542.0"
+        "aws-sdk": "^2.579.0"
     }
 }

@@ -44,13 +44,15 @@ module.exports = function (data) {
 
     raw.push(
         `Subject: ${subject}`,
-        `Content-Type: multipart/mixed; boundary="${MIXED_BOUNDARY}"`
+        `Content-Type: multipart/mixed;`,
+        `\tboundary="${MIXED_BOUNDARY}"`
     );
 
     if (text && html) {
         raw.push(
             `\n--${MIXED_BOUNDARY}`,
-            `Content-Type: multipart/alternative; boundary="${ALTERNATIVE_BOUNDARY}"`
+            `Content-Type: multipart/alternative;`,
+            `\tboundary="${ALTERNATIVE_BOUNDARY}"`
         );
     }
 
@@ -58,7 +60,7 @@ module.exports = function (data) {
         raw.push(
             `\n--${BOUNDARY}`,
             `Content-Transfer-Encoding: base64`,
-            `Content-Type: text/plain; charset=utf-8`,
+            `Content-Type: text/plain; charset=utf-8\n`,
             MaxLine(Buffer.from(text).toString('base64'))
         );
     }
@@ -67,7 +69,7 @@ module.exports = function (data) {
         raw.push(
             `\n--${BOUNDARY}`,
             `Content-Transfer-Encoding: base64`,
-            `Content-Type: text/html; charset=utf-8`,
+            `Content-Type: text/html; charset=utf-8\n`,
             MaxLine(Buffer.from(html).toString('base64'))
         );
     }
@@ -83,7 +85,7 @@ module.exports = function (data) {
                 `Content-Transfer-Encoding: base64`,
                 `Content-Description: ${attachment.name}`,
                 `Content-Disposition: attachment; filename="${attachment.name}"`,
-                `Content-Type: text/plain; charset=${attachment.encoding || 'utf-8'}; name="${attachment.name}"`,
+                `Content-Type: text/plain; charset=${attachment.encoding || 'utf-8'}; name="${attachment.name}"\n`,
                 MaxLine(Buffer.from(attachment.data, attachment.encoding || 'utf8').toString('base64'))
             );
         }

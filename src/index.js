@@ -15,13 +15,13 @@ module.exports = class Emaily {
         data = data || {};
 
         data.region = data.region || 'us-west-2';
-        data.apiVersion = data.apiVersion || '2010-12-01';
+        data.apiVersion = data.apiVersion || '2019-09-27';
 
-        if (data.credentials && data.credentials.constructor === Object) {
+        if (data.credentials instanceof Object) {
             data.credentials = new Aws.Credentials(data.credentials.id, data.credentials.secret);
         }
 
-        this.ses = new Aws.SES(data);
+        this.ses = new Aws.SESV2(data);
     }
 
     async template (data) {
@@ -57,8 +57,19 @@ module.exports = class Emaily {
 
     async send (data) {
         const raw = Raw(data);
-        const options = { RawMessage: { Data: Buffer.from(raw) } };
-    	const result = this.ses.sendRawEmail(options).promise();
+
+        const options = {
+            Content: { Raw: { Data: Buffer.from(raw) } },
+            Destination: {
+                ToAddresses: typeof data.to === 'string' ? [data.to] : data.to,
+                CcAddresses: typeof data.cc === 'string' ? [data.cc] : data.cc,
+                BccAddresses: typeof data.bcc === 'string' ? [data.bcc] : data.bcc,
+            },
+            FromEmailAddress: data.from,
+            ReplyToAddresses: typeof data.reply === 'string' ? [data.reply] : data.reply
+        };
+
+    	const result = this.ses.sendEmail(options).promise();
         return result;
     }
 

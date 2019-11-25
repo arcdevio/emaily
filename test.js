@@ -4,7 +4,7 @@ const Emaily = require('./src/index.js');
 (async function () {
 
     const emaily = new Emaily({
-        credentials: { id: null, secret: null }
+        // credentials: { id: null, secret: null }
     });
 
     const { text, html, csv } = await emaily.template({
@@ -12,8 +12,8 @@ const Emaily = require('./src/index.js');
         lastName: 'shmoe',
         $name: 'Foo Bar', // required
         $byName: 'Arc IO', // required
-        $domain: 'foobar.com', // required
-        $byDomain: 'arcdev.io', // required
+        $domain: 'https://foobar.com/', // required
+        $byDomain: 'https://arcdev.io/', // required
     });
 
     // const text = 'Hello World Text';
@@ -23,10 +23,12 @@ const Emaily = require('./src/index.js');
         text,
         html,
         subject: 'Test Subject',
+        cc: [
+            'alex.steven.elias@gmail.com',
+        ],
         to: [
             'jon@arcdev.io',
             'jonburns10@gmail.com',
-            'alex.steven.elias@gmail.com',
         ],
         from: '"No Reply" <noreply@arcdev.io>',
         attachments: [ { name: 'customer.csv', data: csv } ]
