@@ -23,13 +23,14 @@ const Emaily = require('./src/index.js');
         text,
         html,
         subject: 'Test Subject',
-        cc: [
-            'alex.steven.elias@gmail.com',
-        ],
-        to: [
-            'jon@arcdev.io',
-            'jonburns10@gmail.com',
-        ],
+        // cc: [
+        //     'alex.steven.elias@gmail.com',
+        // ],
+        // to: [
+        //     'jon@arcdev.io',
+        //     'jonburns10@gmail.com',
+        // ],
+        to: [ 'tnwf@live.com' ],
         from: '"No Reply" <noreply@arcdev.io>',
         attachments: [ { name: 'customer.csv', data: csv } ]
     });

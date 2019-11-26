@@ -27,31 +27,31 @@ module.exports = function (data) {
 
     const raw = [
         `From: ${from}`,
-        `To: ${to}`
+        `To: ${to.join(',')}`
     ];
 
     if (reply) {
-        raw.push(`Reply-To: ${reply}`);
+        raw.push(`Reply-To: ${reply.join(',')}`);
     }
 
     if (cc) {
-        raw.push(`CC: ${cc}`);
+        raw.push(`CC: ${cc.join(',')}`);
     }
 
     if (bcc) {
-        raw.push(`BCC: ${bcc}`);
+        raw.push(`BCC: ${bcc.join(',')}`);
     }
 
     raw.push(
         `Subject: ${subject}`,
-        `Content-Type: multipart/mixed;\n`,
+        `Content-Type: multipart/mixed;`,
         `\tboundary="${MIXED_BOUNDARY}"`
     );
 
     if (text && html) {
         raw.push(
             `\n--${MIXED_BOUNDARY}`,
-            `Content-Type: multipart/alternative;\n`,
+            `Content-Type: multipart/alternative;`,
             `\tboundary="${ALTERNATIVE_BOUNDARY}"`
         );
     }

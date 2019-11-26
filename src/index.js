@@ -7,7 +7,7 @@ const Text = require('./template/text.js');
 const Raw = require('./raw.js');
 const Aws = require('aws-sdk');
 
-const SPLIT = /\s+|,|\s+/;
+const SPLIT = /\s*,+\s*|\s+/;
 
 module.exports = class Emaily {
 
@@ -55,22 +55,26 @@ module.exports = class Emaily {
         return { text, html, csv };
     }
 
-    async send (data) {
+    async send (options) {
+        const data = { ...options };
+
+        data.to = typeof data.to === 'string' ? data.to.split(SPLIT) : data.to;
+        data.cc = typeof data.cc === 'string' ? data.cc.split(SPLIT) : data.cc;
+        data.bcc = typeof data.bcc === 'string' ? data.bcc.split(SPLIT) : data.bcc;
+        data.reply = typeof data.reply === 'string' ? data.reply.split(SPLIT) : data.reply;
+
         const raw = Raw(data);
 
-        const options = {
+        return this.ses.sendEmail({
             Content: { Raw: { Data: Buffer.from(raw) } },
             Destination: {
-                ToAddresses: typeof data.to === 'string' ? [data.to] : data.to,
-                CcAddresses: typeof data.cc === 'string' ? [data.cc] : data.cc,
-                BccAddresses: typeof data.bcc === 'string' ? [data.bcc] : data.bcc,
+                ToAddresses: data.to,
+                CcAddresses: data.cc,
+                BccAddresses: data.bcc,
             },
             FromEmailAddress: data.from,
-            ReplyToAddresses: typeof data.reply === 'string' ? [data.reply] : data.reply
-        };
-
-    	const result = this.ses.sendEmail(options).promise();
-        return result;
+            ReplyToAddresses: data.reply
+        }).promise();
     }
 
 }
