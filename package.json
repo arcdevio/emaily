@@ -4,7 +4,7 @@
     "description": "emaily",
     "main": "dst/index.js",
     "scripts": {
-        "b": "cp -r src/* dst/."
+        "build": "cp -r src/* dst/."
     },
     "repository": {
         "type": "git",

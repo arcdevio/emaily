@@ -44,14 +44,14 @@ module.exports = function (data) {
 
     raw.push(
         `Subject: ${subject}`,
-        `Content-Type: multipart/mixed;`,
+        `Content-Type: multipart/mixed;\n`,
         `\tboundary="${MIXED_BOUNDARY}"`
     );
 
     if (text && html) {
         raw.push(
             `\n--${MIXED_BOUNDARY}`,
-            `Content-Type: multipart/alternative;`,
+            `Content-Type: multipart/alternative;\n`,
             `\tboundary="${ALTERNATIVE_BOUNDARY}"`
         );
     }
