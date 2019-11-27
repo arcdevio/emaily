@@ -1,5 +1,5 @@
 
-const Emaily = require('./src/index.js');
+const Emaily = require('./index.js');
 
 (async function () {
 
