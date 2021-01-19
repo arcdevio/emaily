@@ -17,8 +17,13 @@ module.exports = class Emaily {
         data.region = data.region || 'us-west-2';
         data.apiVersion = data.apiVersion || '2019-09-27';
 
-        if (data.credentials instanceof Object) {
-            data.credentials = new Aws.Credentials(data.credentials.id, data.credentials.secret);
+        if (data.accessKeyId && data.secretAccessKey) {
+            data.credentials = new Aws.Credentials(data.accessKeyId, data.secretAccessKey);
+            delete data.accessKeyId;
+            delete data.secretAccessKey;
+        } else if (data.profile) {
+            data.credentials = new Aws.SharedIniFileCredentials({ profile: data.profile });
+            delete data.profile;
         }
 
         this.ses = new Aws.SESV2(data);
