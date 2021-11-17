@@ -1,11 +1,12 @@
 'use strict';
 
+const { SESv2Client, SendEmailCommand } = require("@aws-sdk/client-sesv2");
+const { fromIni } = require("@aws-sdk/credential-provider-ini");
 const TextLine = require('./template/text-line.js');
 const HtmlLine = require('./template/html-line.js');
 const Html = require('./template/html.js');
 const Text = require('./template/text.js');
 const Raw = require('./raw.js');
-const Aws = require('aws-sdk');
 
 const SPLIT = /\s*,+\s*|\s+/;
 
@@ -18,15 +19,15 @@ module.exports = class Emaily {
         data.apiVersion = data.apiVersion || '2019-09-27';
 
         if (data.accessKeyId && data.secretAccessKey) {
-            data.credentials = new Aws.Credentials(data.accessKeyId, data.secretAccessKey);
+            data.credentials = { accessKeyId: data.accessKeyId, secretAccessKey: data.secretAccessKey };
             delete data.accessKeyId;
             delete data.secretAccessKey;
         } else if (data.profile) {
-            data.credentials = new Aws.SharedIniFileCredentials({ profile: data.profile });
+            data.credentials = fromIni({ profile: data.profile });
             delete data.profile;
         }
 
-        this.ses = new Aws.SESV2(data);
+        this.client = new SESv2Client(data);
     }
 
     async template (data) {
@@ -43,15 +44,15 @@ module.exports = class Emaily {
         const csvHead = [];
         const csvLine = [];
 
-    	for (const name in data) {
-    		if (name.charAt(0) !== '$') {
-                const value = data[name];
-    			htmlLines.push(HtmlLine(name, value));
-    			textLines.push(TextLine(name, value));
+        for (const name in data) {
+            if (name.charAt(0) !== '$') {
+                const value = data[ name ];
+                htmlLines.push(HtmlLine(name, value));
+                textLines.push(TextLine(name, value));
                 csvHead.push(name);
                 csvLine.push(value);
-    		}
-    	}
+            }
+        }
 
         const text = Text(data, textLines);
         const html = Html(data, htmlLines);
@@ -70,7 +71,7 @@ module.exports = class Emaily {
 
         const raw = Raw(data);
 
-        return this.ses.sendEmail({
+        const command = new SendEmailCommand({
             Content: { Raw: { Data: Buffer.from(raw) } },
             Destination: {
                 ToAddresses: data.to,
@@ -79,7 +80,9 @@ module.exports = class Emaily {
             },
             FromEmailAddress: data.from,
             ReplyToAddresses: data.reply
-        }).promise();
+        });
+
+        return this.client.send(command);
     }
 
-}
+};

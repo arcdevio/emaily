@@ -1,6 +1,6 @@
 {
     "name": "emaily",
-    "version": "4.0.2",
+    "version": "4.1.0",
     "description": "emaily",
     "main": "index.js",
     "scripts": {
@@ -17,6 +17,7 @@
     },
     "homepage": "https://github.com/arcdevio/emaily#readme",
     "dependencies": {
-        "aws-sdk": "^2.1030.0"
+        "@aws-sdk/client-sesv2": "^3.41.0",
+        "@aws-sdk/credential-provider-ini": "^3.41.0"
     }
 }

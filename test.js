@@ -4,7 +4,7 @@ const Emaily = require('./index.js');
 (async function () {
 
     const emaily = new Emaily({
-        // credentials: { id: null, secret: null }
+        profile: 'arc',
     });
 
     const { text, html, csv } = await emaily.template({
@@ -26,11 +26,11 @@ const Emaily = require('./index.js');
         // cc: [
         //     'alex.steven.elias@gmail.com',
         // ],
-        // to: [
-        //     'jon@arcdev.io',
-        //     'jonburns10@gmail.com',
-        // ],
-        to: [ 'tnwf@live.com' ],
+        to: [
+            'alex.steven.elias@gmail.com',
+            // 'jon@arcdev.io',
+            // 'jonburns10@gmail.com',
+        ],
         from: '"No Reply" <noreply@arcdev.io>',
         attachments: [ { name: 'customer.csv', data: csv } ]
     });
